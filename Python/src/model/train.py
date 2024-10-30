@@ -1,5 +1,5 @@
 # Imports
-from transformers import GPT2Tokenizer, GPT2LMHeadModel, TextDataset, DataCollatorForLanguageModeling, TrainingArguments
+from transformers import GPT2Tokenizer, GPT2LMHeadModel, TextDataset, DataCollatorForLanguageModeling, TrainingArguments, Trainer
 import os
 
 model_name = "gpt2"
@@ -13,6 +13,10 @@ def load_model(model_name):
 def load_tokenizer(model_name):
     tokenizer = GPT2Tokenizer.from_pretrained(model_name)
     return tokenizer
+
+# Load model and tokenizer
+model = load_model(model_name)
+tokenizer = load_tokenizer(model_name)
 
 # Get preprocessed dataset
 def get_preprocessed_data_path():
@@ -28,8 +32,6 @@ def load_dataset(file_path, tokenizer, block_size = 128):
         file_path=file_path,
         block_size=block_size
     )
-
-tokenizer = load_tokenizer(model_name)
 
 # Load dataset
 train_dataset = load_dataset(get_preprocessed_data_path(), tokenizer)
@@ -49,3 +51,18 @@ training_args = TrainingArguments(
     save_total_limit=2,
     prediction_loss_only=True,
 )
+
+# Trainer
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    data_collator=data_collator,
+    train_dataset=train_dataset,
+)
+
+# Fine-tune the model
+trainer.train()
+
+# Save the fine-tuned model
+model.save_pretrained("./gpt2-finetuned-model")
+tokenizer.save_pretrained("./gpt2-finetuned-model")

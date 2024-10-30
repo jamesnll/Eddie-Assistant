@@ -14,7 +14,7 @@ def load_tokenizer(model_name):
 
 # Get preprocessed dataset
 def get_preprocessed_data_path():
-    # Get the absolute path to the current directory of main.py
+    # Get the absolute path to the current directory of train.py
     base_dir = os.path.dirname(os.path.abspath(__file__))
     preprocessed_data_path = os.path.join(base_dir, '..', '..', 'dataset', 'preprocessed_data.txt')
     return preprocessed_data_path

@@ -41,28 +41,39 @@ data_collator = DataCollatorForLanguageModeling(
     tokenizer=tokenizer, mlm=False
 )
 
-# Training arguments
-training_args = TrainingArguments(
-    output_dir="./gpt2-finetuned-model",
-    overwrite_output_dir=True,
-    num_train_epochs=50.0,
-    per_device_train_batch_size=8,
-    save_steps=50000,
-    save_total_limit=2,
-    prediction_loss_only=True,
-)
+# Train the model
+def train_model():
 
-# Trainer
-trainer = Trainer(
-    model=model,
-    args=training_args,
-    data_collator=data_collator,
-    train_dataset=train_dataset,
-)
+    # Load dataset
+    train_dataset = load_dataset(get_preprocessed_data_path(), tokenizer)
 
-# Fine-tune the model
-trainer.train()
+    # Data collator
+    data_collator = DataCollatorForLanguageModeling(
+        tokenizer=tokenizer, mlm=False
+    )
 
-# Save the fine-tuned model
-model.save_pretrained("./gpt2-finetuned-model")
-tokenizer.save_pretrained("./gpt2-finetuned-model")
+    # Training arguments
+    training_args = TrainingArguments(
+        output_dir="./gpt2-finetuned-model",
+        overwrite_output_dir=True,
+        num_train_epochs=50.0,
+        per_device_train_batch_size=8,
+        save_steps=50000,
+        save_total_limit=2,
+        prediction_loss_only=True,
+    )
+
+    # Trainer
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        data_collator=data_collator,
+        train_dataset=train_dataset,
+    )
+
+    # Fine-tune the model
+    trainer.train()
+
+    # Save the fine-tuned model
+    model.save_pretrained("./gpt2-finetuned-model")
+    tokenizer.save_pretrained("./gpt2-finetuned-model")

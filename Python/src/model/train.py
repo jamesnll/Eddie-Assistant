@@ -2,8 +2,6 @@
 from transformers import GPT2Tokenizer, GPT2LMHeadModel, TextDataset, DataCollatorForLanguageModeling, TrainingArguments, Trainer
 import os
 
-model_name = "gpt2"
-
 # Load model
 def load_model(model_name):
     model = GPT2LMHeadModel.from_pretrained(model_name)
@@ -13,10 +11,6 @@ def load_model(model_name):
 def load_tokenizer(model_name):
     tokenizer = GPT2Tokenizer.from_pretrained(model_name)
     return tokenizer
-
-# Load model and tokenizer
-model = load_model(model_name)
-tokenizer = load_tokenizer(model_name)
 
 # Get preprocessed dataset
 def get_preprocessed_data_path():
@@ -33,16 +27,13 @@ def load_dataset(file_path, tokenizer, block_size = 128):
         block_size=block_size
     )
 
-# Load dataset
-train_dataset = load_dataset(get_preprocessed_data_path(), tokenizer)
-
-# Data collator
-data_collator = DataCollatorForLanguageModeling(
-    tokenizer=tokenizer, mlm=False
-)
-
 # Train the model
 def train_model():
+
+    model_name = "gpt2"
+    # Load model and tokenizer
+    model = load_model(model_name)
+    tokenizer = load_tokenizer(model_name)
 
     # Load dataset
     train_dataset = load_dataset(get_preprocessed_data_path(), tokenizer)

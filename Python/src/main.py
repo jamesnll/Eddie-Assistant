@@ -1,7 +1,9 @@
 import os
-from model.preprocess import preprocess_data
+import argparse
+from model.preprocess import preprocess_data  # Import preprocessing function
+from model.train import train_model  # Import training function
 
-def main():
+def main(preprocess, train):
     """
     Main script for preprocessing dataset files.
 
@@ -12,14 +14,27 @@ def main():
 
     Ensure that the dataset is structured correctly before running this script.
     """
-    # Get the absolute path to the current directory of main.py
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    
-    # Construct the absolute path to the dataset folder (up one level)
-    input_folder = os.path.join(base_dir, '..', 'dataset')
-    output_file = os.path.join(base_dir, '..', 'dataset', 'preprocessed_data.txt')
-    
-    preprocess_data(input_folder=input_folder, output_file=output_file)
+
+    if preprocess:
+
+        # Get the absolute path to the current directory of main.py
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        
+        # Construct the absolute path to the dataset folder (up one level)
+        input_folder = os.path.join(base_dir, '..', 'dataset')
+        output_file = os.path.join(base_dir, '..', 'dataset', 'preprocessed_data.txt')
+        print("Preprocessing data...")
+        preprocess_data(input_folder=input_folder, output_file=output_file)
+
+    if train:
+        print("Training the model...")
+        train_model()
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='Run preprocessing and/or training.')
+    parser.add_argument('--preprocess', action='store_true', help='Run data preprocessing')
+    parser.add_argument('--train', action='store_true', help='Run model training')
+
+    args = parser.parse_args()
+
+    main(args.preprocess, args.train)

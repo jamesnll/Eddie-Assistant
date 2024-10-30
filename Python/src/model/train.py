@@ -1,5 +1,5 @@
 # Imports
-from transformers import GPT2Tokenizer, GPT2LMHeadModel, TextDataset, DataCollatorForLanguageModeling
+from transformers import GPT2Tokenizer, GPT2LMHeadModel, TextDataset, DataCollatorForLanguageModeling, TrainingArguments
 import os
 
 model_name = "gpt2"
@@ -37,4 +37,15 @@ train_dataset = load_dataset(get_preprocessed_data_path(), tokenizer)
 # Data collator
 data_collator = DataCollatorForLanguageModeling(
     tokenizer=tokenizer, mlm=False
+)
+
+# Training arguments
+training_args = TrainingArguments(
+    output_dir="./gpt2-finetuned-model",
+    overwrite_output_dir=True,
+    num_train_epochs=50.0,
+    per_device_train_batch_size=8,
+    save_steps=50000,
+    save_total_limit=2,
+    prediction_loss_only=True,
 )

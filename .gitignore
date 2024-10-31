@@ -160,3 +160,10 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+# Dataset files
+preprocessed_data.txt
+cached_lm_GPT2Tokenizer_128_preprocessed_data.txt
+
+# Model output folder
+Python/src/gpt2-finetuned-model

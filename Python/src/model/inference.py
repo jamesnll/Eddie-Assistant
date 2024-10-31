@@ -46,14 +46,3 @@ def generate_text(model_path, sequence, max_length):
         # Print the formatted output
         print("Q: " + question_part)
         print("A: " + answer_part)
-
-
-# Get the absolute path to the current directory of inference.py
-base_dir = os.path.dirname(os.path.abspath(__file__))
-        
-# Construct the absolute path to the fine-tuned model folder (up one level)
-model_path = os.path.join(base_dir, '..', 'gpt2-finetuned-model')
-# Load the fine-tuned model and tokenizer
-max_len = 100
-sequence = "Q: Who is Mara Jade in Heir to the Empire?"
-generate_text(model_path, sequence, max_len)

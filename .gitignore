@@ -166,4 +166,4 @@ preprocessed_data.txt
 cached_lm_GPT2Tokenizer_128_preprocessed_data.txt
 
 # Model output folder
-Python/src/model/gpt2-finetuned-squad
+Python/src/model/gpt2-finetuned-model

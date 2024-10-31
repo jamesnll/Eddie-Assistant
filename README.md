@@ -1,4 +1,5 @@
 # Eddie-Book-Assistant
+Eddie is a virtual assistant designed to provide a seamless question-answering experience focused on books. With a setup inspired by Alexa, Eddie combines an ESP32 embedded system for real-time voice interaction and a fine-tuned GPT-2 model curated specifically for book-related questions. Written in Python and powered by the ESP32, Eddie takes voice input from users, queries the model, and responds with spoken output.
 
 ## Project Structure
 📂 root  

@@ -48,3 +48,5 @@ def generate_text(model_path, sequence, max_length):
         # Print the formatted output
         print("Q: " + question_part)
         print("A: " + answer_part)
+
+        return answer_part

@@ -34,7 +34,7 @@ def ask_question():
     answer_text = generate_text(model_path, sequence, max_length)
 
     # Return the output as JSON
-    return jsonify({"answer": answer_text})
+    return jsonify({"answer": answer_text}), 200
 
 if __name__ == '__main__':
     app.run(port=8000)

@@ -26,6 +26,10 @@ def ask_question():
     max_length = 100
     sequence = data.get('sequence')
 
+    # Check if sequence is None or empty
+    if not sequence:
+        return jsonify({"error": "The 'sequence' field is required and cannot be empty."}), 400
+
     # Call the generate_text function
     answer_text = generate_text(model_path, sequence, max_length)
 

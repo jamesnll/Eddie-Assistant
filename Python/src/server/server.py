@@ -29,6 +29,10 @@ def ask_question():
     # Check if sequence is None or empty
     if not sequence:
         return jsonify({"error": "The 'sequence' field is required and cannot be empty."}), 400
+    
+    # Check if sequence starts with "Q:"
+    if not sequence.startswith("Q:"):
+        return jsonify({"error": "The 'sequence' field must start with 'Q:'."}), 400
 
     # Call the generate_text function
     answer_text = generate_text(model_path, sequence, max_length)

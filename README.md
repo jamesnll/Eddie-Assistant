@@ -1,7 +1,8 @@
 # Eddie-Book-Assistant
-Eddie is a virtual assistant designed to provide a seamless question-answering experience focused on books. With a setup inspired by Alexa, Eddie combines an ESP32 embedded system for real-time voice interaction and a fine-tuned GPT-2 model curated specifically for book-related questions. Written in Python and powered by the ESP32, Eddie takes voice input from users, queries the model, and responds with spoken output.
+Eddie is a virtual assistant designed to provide a seamless, book-focused question-answering experience. Inspired by Alexa, Eddie integrates an ESP32 embedded system for real-time voice interaction and a fine-tuned GPT-2 model hosted on a Flask web server. The fine-tuned GPT-2 model, written in Python and deployed on a separate machine, processes book-related queries with enhanced accuracy. The ESP32 acts as a client system, written in C++, which captures user input, sends queries to the Flask server, and receives responses to provide spoken output.
 ## Features
 * Fine-Tuned GPT-2 Model: Curated dataset enhances accuracy and relevance for book-focused queries.  
+* Flask Web Server: Manages incoming requests from the ESP32 client, facilitating the processing of user questions and returning responses efficiently.  
 ## Project Structure
 📂 root  
 │  
@@ -27,6 +28,7 @@ Eddie is a virtual assistant designed to provide a seamless question-answering e
 │    │    │    ├── 📄 train.py         # Model training script  
 │    │    │    └── 📄 inference.py     # Script for generating inferences  
 │    │    │  
-│    │    └── 📄 main.py               # Main entry point for preprocessing, training, or inferencing  
+│    │    ├──  📄 main.py               # Main entry point for preprocessing, training, or inferencing  
+│    │    └── 📄 requirements.txt      # Python packages required  
 │    │  
 │    └── 📄 README.md                  # Project documentation  

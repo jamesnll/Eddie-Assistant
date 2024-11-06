@@ -21,6 +21,7 @@ def ask_question():
     # Get the absolute path to the current directory of server.py
     base_dir = os.path.dirname(os.path.abspath(__file__))
 
+    # Setup generate_text parameters
     data = request.json
     model_path = os.path.join(base_dir, '..', 'gpt2-finetuned-model')
     max_length = 100

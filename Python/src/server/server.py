@@ -8,7 +8,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from model.inference import generate_text # Import inference function
 
-app = Flask(__name__)
+app = Flask(__name__) # Create Flask app
 
 @app.route('/')
 def home():

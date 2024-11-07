@@ -13,7 +13,10 @@ void app_main(void)
 {
     nvs_flash_init(); // this is important in wifi case to store configurations , code will not work if this is not added
     wifi_connection();
+
+    xTaskCreate(&wifi_check_task, "wifi_check_task", 2048, NULL, 5, NULL); // FreeRTOS task to check wifi connection
     // Configure the I/O pin for output
+
     gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
 
     while (1) {

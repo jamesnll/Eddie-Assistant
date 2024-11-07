@@ -4,5 +4,8 @@
 # CMakeLists in this exact order for cmake to work correctly
 cmake_minimum_required(VERSION 3.5)
 
+# Include components folder
+set(EXTRA_COMPONENT_DIRS components components/secrets)
+
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(ESP32)

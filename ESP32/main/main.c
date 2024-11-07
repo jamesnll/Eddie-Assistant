@@ -1,6 +1,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/gpio.h"
+#include "secrets.h"
 
 #define LED_PIN 2  // Pin number for the built-in LED
 

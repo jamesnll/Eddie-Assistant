@@ -7,7 +7,11 @@
             "includePath": [
                 "${config:idf.espIdfPath}/components/**",
                 "${config:idf.espIdfPathWin}/components/**",
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "C:/Users/langi/esp/v5.3.1/esp-idf/components/nvs_flash/include",
+                "C:/Users/langi/esp/v5.3.1/esp-idf/components/esp_wifi/include",
+                "C:/Users/langi/esp/v5.3.1/esp-idf/components/esp_event/include"
+
             ],
             "browse": {
                 "path": [

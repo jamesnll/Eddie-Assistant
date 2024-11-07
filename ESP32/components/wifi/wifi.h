@@ -15,5 +15,8 @@
 
 void wifi_event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t event_id,void *event_data);
 void wifi_connection();
+void wifi_check_task(void *pvParameter);
+
+#define CHECK_WIFI_TASK_INTERVAL_MS 30000  // 30 seconds interval
 
 #endif // WIFI_H

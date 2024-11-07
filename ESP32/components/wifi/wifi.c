@@ -53,3 +53,17 @@ void wifi_connection()
     esp_wifi_connect(); // connect with saved ssid and password
     printf("wifi_init_softap finished. SSID: %s\tPassword: %s\n", SECRET_SSID, SECRET_PASSWORD);
 }
+
+// FreeRTOS task to check Wi-Fi status and reconnect if necessary
+void wifi_check_task(void *pvParameter) {
+    while (1) {
+        wifi_ap_record_t ap_info;
+        if (esp_wifi_sta_get_ap_info(&ap_info) != ESP_OK) {
+            printf("Wi-Fi is disconnected, attempting to reconnect...\n");
+            esp_wifi_connect();
+        } else {
+            printf("Wi-Fi is connected.\n");
+        }
+        vTaskDelay(CHECK_WIFI_TASK_INTERVAL_MS / portTICK_PERIOD_MS); // Wait for 30 seconds
+    }
+}

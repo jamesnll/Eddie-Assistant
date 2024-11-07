@@ -3,4 +3,4 @@ sdkconfig
 sdkconfig.old
 
 # Secrets file
-components/secrets
+# components/secrets

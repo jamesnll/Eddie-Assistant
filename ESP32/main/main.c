@@ -2,8 +2,12 @@
 #include "freertos/task.h"
 #include "driver/gpio.h"
 #include "secrets.h"
+#include "wifi.h"
+
 
 #define LED_PIN 2  // Pin number for the built-in LED
+
+
 
 void app_main(void)
 {

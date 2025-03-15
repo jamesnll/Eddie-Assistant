@@ -48,3 +48,24 @@ def get_dataset():
 
     # Return the dataset as a pandas DataFrame
     return df
+
+def get_top_k_shows(k):
+    # Get the dataset using the get_dataset function
+    df = get_dataset()
+
+    if df is None:
+        return None
+
+    # Sort the DataFrame by 'vote_count' in descending order
+    top_k_shows = df.sort_values(by='vote_count', ascending=False).head(k)
+
+    # Get the directory of the executing script
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+
+    # Save the top k shows to a CSV file in the same directory as the script
+    top_k_shows.to_csv(os.path.join(script_directory, 'top_k_shows.csv'), index=False)
+
+    print(f"Top {k} shows saved to '{script_directory}\\top_k_shows.csv'.")
+
+# Get the top 5 shows by vote_count
+get_top_k_shows(5)

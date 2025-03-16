@@ -49,6 +49,7 @@ def get_dataset():
     # Return the dataset as a pandas DataFrame
     return df
 
+
 def get_top_k_shows(k):
     """Get the top k shows by vote_count."""
     # Define the CSV file path for the top_k_shows
@@ -73,6 +74,7 @@ def get_top_k_shows(k):
         print(f"Top {k} shows saved to '{top_k_shows_csv}'.")
 
     return df  # Return the top_k_shows DataFrame for further processing
+
 
 def check_missing_overviews(df):
     """Function to check how many shows have no overview"""
@@ -110,6 +112,36 @@ def remove_shows_without_overview():
     print(f"Shows without an overview removed. Cleaned data saved to '{top_k_shows_csv}'.")
 
 
+def filter_overview_length(min_words=25):
+    """Filter out shows that have less than `min_words` words in their overview."""
+    # Define the CSV file path for the top_k_shows
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    top_k_shows_csv = os.path.join(script_directory, 'top_k_shows.csv')
+
+    if not os.path.exists(top_k_shows_csv):
+        print(f"CSV file '{top_k_shows_csv}' does not exist.")
+        return None
+
+    # Load the top_k_shows CSV file
+    df = pd.read_csv(top_k_shows_csv)
+
+    # Function to count the number of words in an overview
+    def count_words(overview):
+        return len(str(overview).split())
+
+    # Filter the DataFrame by the number of words in the 'overview' column
+    df_filtered = df[df['overview'].apply(count_words) >= min_words]
+
+    # Save the filtered DataFrame back to the CSV file
+    df_filtered.to_csv(top_k_shows_csv, index=False)
+
+    # Print a message with the count of rows removed
+    removed_count = len(df) - len(df_filtered)
+    print(f"Filtered out {removed_count} shows with less than {min_words} words in the overview.")
+    
+    return df_filtered
+
+
 # Get the top k shows by vote_count
 top_k_shows = get_top_k_shows(10000)
 
@@ -117,3 +149,6 @@ if top_k_shows is not None:
     check_missing_overviews(top_k_shows)
 
     remove_shows_without_overview()
+
+    # Example usage:
+    filtered_df = filter_overview_length(min_words=25)

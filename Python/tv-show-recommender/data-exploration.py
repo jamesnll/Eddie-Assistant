@@ -50,22 +50,70 @@ def get_dataset():
     return df
 
 def get_top_k_shows(k):
-    # Get the dataset using the get_dataset function
-    df = get_dataset()
+    """Get the top k shows by vote_count."""
+    # Define the CSV file path for the top_k_shows
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    top_k_shows_csv = os.path.join(script_directory, 'top_k_shows.csv')
 
-    if df is None:
+    # Check if the CSV already exists
+    if os.path.exists(top_k_shows_csv):
+        print(f"Loading top {k} shows from existing CSV file.")
+        df = pd.read_csv(top_k_shows_csv)
+    else:
+        # Get the dataset using the get_dataset function
+        df = get_dataset()
+        if df is None:
+            return None
+
+        # Sort the DataFrame by 'vote_count' in descending order
+        df = df.sort_values(by='vote_count', ascending=False).head(k)
+
+        # Save the top k shows to a CSV file in the same directory as the script
+        df.to_csv(top_k_shows_csv, index=False)
+        print(f"Top {k} shows saved to '{top_k_shows_csv}'.")
+
+    return df  # Return the top_k_shows DataFrame for further processing
+
+def check_missing_overviews(df):
+    """Function to check how many shows have no overview"""
+    # Check for NaN values in the 'overview' column
+    missing_overview_count = df['overview'].isna().sum()
+    
+    # Check for empty strings in the 'overview' column
+    empty_overview_count = df['overview'].eq('').sum()
+
+    # Total count of shows with no overview (either NaN or empty string)
+    total_missing_overview = missing_overview_count + empty_overview_count
+
+    print(f"Total number of shows with no overview: {total_missing_overview}")
+
+
+def remove_shows_without_overview():
+    """Remove shows without an overview from the CSV."""
+    # Define the CSV file path for the top_k_shows
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    top_k_shows_csv = os.path.join(script_directory, 'top_k_shows.csv')
+
+    if not os.path.exists(top_k_shows_csv):
+        print(f"CSV file '{top_k_shows_csv}' does not exist.")
         return None
 
-    # Sort the DataFrame by 'vote_count' in descending order
-    top_k_shows = df.sort_values(by='vote_count', ascending=False).head(k)
+    # Load the top_k_shows CSV file
+    df = pd.read_csv(top_k_shows_csv)
 
-    # Get the directory of the executing script
-    script_directory = os.path.dirname(os.path.realpath(__file__))
+    # Remove rows where 'overview' is NaN or empty
+    cleaned_df = df[df['overview'].notna() & (df['overview'] != '')]
 
-    # Save the top k shows to a CSV file in the same directory as the script
-    top_k_shows.to_csv(os.path.join(script_directory, 'top_k_shows.csv'), index=False)
+    # Save the cleaned DataFrame back to the CSV
+    cleaned_df.to_csv(top_k_shows_csv, index=False)
 
-    print(f"Top {k} shows saved to '{script_directory}\\top_k_shows.csv'.")
+    print(f"Shows without an overview removed. Cleaned data saved to '{top_k_shows_csv}'.")
 
-# Get the top 5 shows by vote_count
-get_top_k_shows(5)
+
+# Get the top k shows by vote_count
+top_k_shows = get_top_k_shows(10000)
+
+if top_k_shows is not None:
+    check_missing_overviews(top_k_shows)
+
+    remove_shows_without_overview()

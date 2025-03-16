@@ -142,6 +142,27 @@ def filter_overview_length(min_words=25):
     return df_filtered
 
 
+def add_tagged_overview(filtered_df):
+    """Add a 'tagged_overview' field to the DataFrame and save as 'top_k_shows_cleaned.csv'."""
+    # Ensure required columns exist
+    if 'id' not in filtered_df.columns or 'overview' not in filtered_df.columns:
+        print("Required columns ('id', 'overview') not found in the dataset.")
+        return None
+
+    # Create the new 'tagged_overview' column
+    filtered_df['tagged_overview'] = filtered_df['id'].astype(str) + ' ' + filtered_df['overview'].astype(str)
+
+    # Define the output file path
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    cleaned_csv_path = os.path.join(script_directory, 'top_k_shows_cleaned.csv')
+
+    # Save the modified DataFrame to a new CSV file
+    filtered_df.to_csv(cleaned_csv_path, index=False)
+
+    print(f"Updated dataset saved as '{cleaned_csv_path}'.")
+    return cleaned_csv_path
+
+
 # Get the top k shows by vote_count
 top_k_shows = get_top_k_shows(10000)
 
@@ -150,5 +171,6 @@ if top_k_shows is not None:
 
     remove_shows_without_overview()
 
-    # Example usage:
     filtered_df = filter_overview_length(min_words=25)
+
+    cleaned_csv_path = add_tagged_overview(filtered_df)

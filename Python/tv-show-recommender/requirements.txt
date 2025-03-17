@@ -1,0 +1,8 @@
+kagglehub==0.3.10
+pandas==2.2.2
+matplotlib==3.10.1
+seaborn==0.13.2
+langchain-chroma==0.2.2
+langchain-community==0.3.19
+langchain-openai==0.3.8
+transformers==4.45.1

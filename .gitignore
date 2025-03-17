@@ -164,9 +164,16 @@ cython_debug/
 # Dataset files
 preprocessed_data.txt
 cached_lm_GPT2Tokenizer_128_preprocessed_data.txt
+top_k_shows.csv
+top_k_shows_cleaned.csv
+tagged_overview.txt
+results.txt
 
 # Model output folder
 gpt2-finetuned-model
+
+# Vector database
+chroma_db
 
 # ESP32 wifi secrets
 ESP32/components/secrets/secrets.h

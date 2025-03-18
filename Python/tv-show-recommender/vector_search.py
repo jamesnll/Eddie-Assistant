@@ -73,7 +73,7 @@ def retrieve_semantic_recommendations(db_shows: Chroma, query: str, top_k: int =
     return top_shows["name"].tolist()
 
 
-def main():
+def get_recommendations(query: str) -> list:
     """Main function to run the process."""
     # Load environment variables
     load_environment_variables()
@@ -99,11 +99,15 @@ def main():
         db_shows = create_or_load_chroma_db(db_path, documents)
 
     # Retrieve recommendations
-    results = retrieve_semantic_recommendations(db_shows, "A TV show that is similar to Better Call Saul", 10, shows)
+    results = retrieve_semantic_recommendations(db_shows, query, 10, shows)
 
-    # Print results
-    print(results)
+    # Check if results are similar
+    # print(results)
+
+    return results
 
 
 if __name__ == "__main__":
-    main()
+    query = "A TV show that is similar to Better Call Saul"
+    tv_show_results = get_recommendations(query)
+    print(tv_show_results)

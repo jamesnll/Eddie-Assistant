@@ -13,10 +13,13 @@
 #include "lwip/sys.h" // system applications for light weight ip apps
 #include "../secrets/secrets.h" // wifi secret credentials
 
+void attempt_wifi_reconnect();
 void wifi_event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t event_id,void *event_data);
 void wifi_connection();
 void wifi_check_task(void *pvParameter);
 
 #define CHECK_WIFI_TASK_INTERVAL_MS 30000  // 30 seconds interval
+#define MAX_RETRIES 10                      // Maximum number of retries to reconnect to wifi
+#define RETRY_DELAY_MS 2000                // Delay between reconnection attempts
 
 #endif // WIFI_H

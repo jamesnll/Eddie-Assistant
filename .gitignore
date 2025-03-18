@@ -176,4 +176,4 @@ gpt2-finetuned-model
 chroma_db
 
 # ESP32 wifi secrets
-ESP32/components/secrets/secrets.h
+ESP32/components/secrets/

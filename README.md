@@ -35,6 +35,12 @@ Eddie is a **semantic TV show recommender system** designed to deliver personali
             - 📄 main.py → Main entry point for preprocessing, training, or inferencing  
           - 📄 requirements.txt → Python packages required  
       - 📄 README.md → Archive documentation  
+  - 📂 tv-show-recommender&nbsp;&nbsp;&nbsp;&nbsp; → Directory for recommender code  
+    - 📄 data_exploration.py → Dataset retrieval and data preprocessing  
+    - 📄 vector_search.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ Performs semantic search on TV show overviews using a Chroma vector database to provide relevant recommendations  
+    - 📄 server.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; → A Flask server with a GET request endpoint to retrieve TV show recommendations based on a query  
+    - 📄 requirements.txt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; → Python packages required  
+    - 📄 README.md&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;→ TV-show-recommender documentation  
 
 📄 README.md → Project documentation  
 

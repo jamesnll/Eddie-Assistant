@@ -11,8 +11,8 @@
 
 static char response_buffer[MAX_HTTP_OUTPUT_BUFFER];
 
-// TODO: Create a function to handle http events
-// TODO: Implement functionality for HTTP events
+// TODO: Find out if there's anymore code needed for any of the states
+// TODO: Once we receive the data, send it into a message queue to be used by another FreeRTOS task (Future feature)
 static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
 {
     switch (evt->event_id)
@@ -45,7 +45,6 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
     return ESP_OK;
 }
 
-// TODO: Implement functionality for the http_get_task function
 void http_get_task(void *pvParameters)
 {
     // Create esp http client config

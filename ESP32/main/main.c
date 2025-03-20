@@ -17,6 +17,7 @@ void app_main(void)
 
     xTaskCreate(&wifi_check_task, "wifi_check_task", 2048, NULL, 5, NULL); // FreeRTOS task to check wifi connection
 
+    // TODO: change this to use a semaphore or other means so that the http_get_task only executes once the wifi task is in the connected state
     vTaskDelay(40000 / portTICK_PERIOD_MS);  // 40-second delay
     printf("Waiting complete!\n");
 

@@ -40,3 +40,12 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
 }
 
 // TODO: Implement functionality for the http_get_task function
+void http_get_task(void *pvParameters)
+{
+    // Create esp http client config
+    esp_http_client_config_t config = 
+    {
+        .url = "https://3605-2604-3d08-9a77-8530-69d0-8433-4aa5-575e.ngrok-free.app",
+        .event_handler = _http_event_handler,
+    };
+}

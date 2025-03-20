@@ -12,25 +12,25 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
     switch (evt->event_id)
     {
     case HTTP_EVENT_ERROR:
-        /* code */
+        ESP_LOGI(TAG, "HTTP_EVENT_ERROR");
         break;
     case HTTP_EVENT_ON_CONNECTED:
-        /* code */
+        ESP_LOGI(TAG, "HTTP_EVENT_ON_CONNECTED");
         break;
     case HTTP_EVENT_HEADERS_SENT:
-        /* code */
+        ESP_LOGI(TAG, "HTTP_EVENT_HEADERS_SENT");
         break;
     case HTTP_EVENT_ON_HEADER:
-        /* code */
+        ESP_LOGI(TAG, "HTTP_EVENT_ON_HEADER");
         break;
     case HTTP_EVENT_ON_DATA:
-        /* code */
+        ESP_LOGI(TAG, "HTTP_EVENT_ON_DATA");
         break;
     case HTTP_EVENT_ON_FINISH:
-        /* code */
+        ESP_LOGI(TAG, "HTTP_EVENT_ON_FINISH");
         break;
     case HTTP_EVENT_DISCONNECTED:
-        /* code */
+        ESP_LOGI(TAG, "HTTP_EVENT_DISCONNECTED");
         break;
     default:
         break;

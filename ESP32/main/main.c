@@ -3,6 +3,7 @@
 #include "driver/gpio.h"
 #include "secrets.h"
 #include "wifi.h"
+#include "http.h"
 
 
 #define LED_PIN 2  // Pin number for the built-in LED
@@ -15,6 +16,9 @@ void app_main(void)
     wifi_connection();
 
     xTaskCreate(&wifi_check_task, "wifi_check_task", 2048, NULL, 5, NULL); // FreeRTOS task to check wifi connection
+
+    // Start the HTTP GET task after Wi-Fi is connected
+    xTaskCreate(&http_get_task, "http_get_task", 8192, NULL, 5, NULL);
 
     // Configure the I/O pin for output
     gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);

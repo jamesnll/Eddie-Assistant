@@ -5,6 +5,10 @@
 
 #define TAG "HTTP_CLIENT"
 
+#define MAX_HTTP_OUTPUT_BUFFER 1024
+
+static char response_buffer[MAX_HTTP_OUTPUT_BUFFER];
+
 // TODO: Create a function to handle http events
 // TODO: Implement functionality for HTTP events
 static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
@@ -45,7 +49,28 @@ void http_get_task(void *pvParameters)
     // Create esp http client config
     esp_http_client_config_t config = 
     {
-        .url = "https://3605-2604-3d08-9a77-8530-69d0-8433-4aa5-575e.ngrok-free.app",
+        .url = "http://3605-2604-3d08-9a77-8530-69d0-8433-4aa5-575e.ngrok-free.app/",
         .event_handler = _http_event_handler,
+        .user_data = response_buffer
     };
+
+    // Initialize HTTP Client
+    esp_http_client_handle_t client = esp_http_client_init(&config);
+
+    // Perform GET request
+    esp_err_t err = esp_http_client_perform(client);
+    if (err == ESP_OK) {
+        ESP_LOGI(TAG, "HTTP GET Status = %d, content_length = %lld",
+                 esp_http_client_get_status_code(client),
+                 (long long)esp_http_client_get_content_length(client));
+        ESP_LOGI(TAG, "Response: %s", response_buffer);
+    }
+    else
+    {
+        ESP_LOGE(TAG, "HTTP GET request failed: %s", esp_err_to_name(err));
+    }
+
+    // Cleanup and delete task
+    esp_http_client_cleanup(client);
+    vTaskDelete(NULL);
 }

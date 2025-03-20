@@ -1,6 +1,7 @@
 #include "http.h"
 #include "esp_log.h"
 #include "esp_http_client.h"
+#include "esp_tls.h"
 #include <stdio.h>
 
 #define TAG "HTTP_CLIENT"
@@ -47,11 +48,17 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
 void http_get_task(void *pvParameters)
 {
     // Create esp http client config
-    esp_http_client_config_t config = 
-    {
-        .url = "http://3605-2604-3d08-9a77-8530-69d0-8433-4aa5-575e.ngrok-free.app/",
+    esp_http_client_config_t config = {
+        .url = "https://8bf8-2604-3d08-9a77-8530-69d0-8433-4aa5-575e.ngrok-free.app",
         .event_handler = _http_event_handler,
-        .user_data = response_buffer
+        .user_data = response_buffer,
+        .auth_type = HTTP_AUTH_TYPE_NONE,
+        .cert_pem = NULL,
+        .skip_cert_common_name_check = true,
+        .transport_type = HTTP_TRANSPORT_OVER_SSL,
+        .buffer_size = MAX_HTTP_OUTPUT_BUFFER,
+        .buffer_size_tx = MAX_HTTP_OUTPUT_BUFFER,
+        .crt_bundle_attach = NULL      // Not using the bundle
     };
 
     // Initialize HTTP Client

@@ -7,10 +7,6 @@
 
 #define TAG "HTTP_CLIENT"
 
-#define MAX_HTTP_OUTPUT_BUFFER 1024
-
-static char response_buffer[MAX_HTTP_OUTPUT_BUFFER];
-
 // TODO: Once we receive the data, send it into a message queue to be used by another FreeRTOS task (Future feature)
 static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
 {
@@ -56,13 +52,10 @@ void http_get_task(void *pvParameters)
     esp_http_client_config_t config = {
         .url = "https://5001-2604-3d08-9a77-8530-11bb-4c83-cd8f-911.ngrok-free.app",
         .event_handler = _http_event_handler,
-        .user_data = response_buffer,
         .auth_type = HTTP_AUTH_TYPE_NONE,
         .cert_pem = NULL,  // No certificate PEM (self-signed or invalid cert)
         .skip_cert_common_name_check = true, // Skip Common Name check
-        .transport_type = HTTP_TRANSPORT_OVER_SSL,
-        .buffer_size = MAX_HTTP_OUTPUT_BUFFER,
-        .buffer_size_tx = MAX_HTTP_OUTPUT_BUFFER
+        .transport_type = HTTP_TRANSPORT_OVER_SSL
     };
 
     // Initialize HTTP Client
@@ -70,11 +63,11 @@ void http_get_task(void *pvParameters)
 
     // Perform GET request
     esp_err_t err = esp_http_client_perform(client);
-    if (err == ESP_OK) {
+    if (err == ESP_OK) 
+    {
         ESP_LOGI(TAG, "HTTP GET Status = %d, content_length = %lld",
                  esp_http_client_get_status_code(client),
                  (long long)esp_http_client_get_content_length(client));
-        ESP_LOGI(TAG, "Response: %s", response_buffer);
     }
     else
     {

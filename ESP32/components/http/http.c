@@ -11,7 +11,6 @@
 
 static char response_buffer[MAX_HTTP_OUTPUT_BUFFER];
 
-// TODO: Find out if there's anymore code needed for any of the states
 // TODO: Once we receive the data, send it into a message queue to be used by another FreeRTOS task (Future feature)
 static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
 {
@@ -33,7 +32,8 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
         ESP_LOGI(TAG, "HTTP_EVENT_ON_DATA: Received %d bytes.", evt->data_len);
 
         // Print received data
-        if (evt->data && evt->data_len > 0) {
+        // TODO: Modify this to send it to a message queue (can keep this for logging, for example: %s was written to the message queue)
+        if (evt->data && evt->data_len > 0) { 
             ESP_LOGI(TAG, "Received Data: %.*s", evt->data_len, (char*)evt->data);
         }
         break;

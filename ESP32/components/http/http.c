@@ -31,6 +31,11 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
         break;
     case HTTP_EVENT_ON_DATA:
         ESP_LOGI(TAG, "HTTP_EVENT_ON_DATA: Received %d bytes.", evt->data_len);
+
+        // Print received data
+        if (evt->data && evt->data_len > 0) {
+            ESP_LOGI(TAG, "Received Data: %.*s", evt->data_len, (char*)evt->data);
+        }
         break;
     case HTTP_EVENT_ON_FINISH:
         ESP_LOGI(TAG, "HTTP_EVENT_ON_FINISH: HTTP Request completed!");

@@ -44,6 +44,9 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
     return ESP_OK;
 }
 
+// TODO: Create a string "query" that stores the user query to the recommendation service
+// TODO: Append the "query" string to the config.url
+// TODO: (Future Feature) Read input from a message queue and append the received data to the config.url
 void http_get_task(void *pvParameters)
 {
     // Create esp http client config

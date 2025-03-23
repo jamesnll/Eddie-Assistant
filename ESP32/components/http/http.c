@@ -18,25 +18,25 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
     switch (evt->event_id)
     {
     case HTTP_EVENT_ERROR:
-        ESP_LOGI(TAG, "HTTP_EVENT_ERROR");
+        ESP_LOGI(TAG, "HTTP_EVENT_ERROR: General error occurred.");
         break;
     case HTTP_EVENT_ON_CONNECTED:
-        ESP_LOGI(TAG, "HTTP_EVENT_ON_CONNECTED");
+        ESP_LOGI(TAG, "HTTP_EVENT_ON_CONNECTED: Connection established.");
         break;
     case HTTP_EVENT_HEADERS_SENT:
-        ESP_LOGI(TAG, "HTTP_EVENT_HEADERS_SENT");
+        ESP_LOGI(TAG, "HTTP_EVENT_HEADERS_SENT: Headers successfully sent.");
         break;
     case HTTP_EVENT_ON_HEADER:
-        ESP_LOGI(TAG, "HTTP_EVENT_ON_HEADER");
+        ESP_LOGI(TAG, "HTTP_EVENT_ON_HEADER: Received headers successfully.");
         break;
     case HTTP_EVENT_ON_DATA:
-        ESP_LOGI(TAG, "HTTP_EVENT_ON_DATA");
+        ESP_LOGI(TAG, "HTTP_EVENT_ON_DATA: Received %d bytes.", evt->data_len);
         break;
     case HTTP_EVENT_ON_FINISH:
-        ESP_LOGI(TAG, "HTTP_EVENT_ON_FINISH");
+        ESP_LOGI(TAG, "HTTP_EVENT_ON_FINISH: HTTP Request completed!");
         break;
     case HTTP_EVENT_DISCONNECTED:
-        ESP_LOGI(TAG, "HTTP_EVENT_DISCONNECTED");
+        ESP_LOGI(TAG, "HTTP_EVENT_DISCONNECTED: Connection closed unexpectedly.");
         break;
     default:
         break;

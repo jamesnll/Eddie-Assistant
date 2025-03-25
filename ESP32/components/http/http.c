@@ -49,6 +49,10 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
 // TODO: (Future Feature) Read input from a message queue and append the received data to the config.url
 void http_get_task(void *pvParameters)
 {
+    // User query
+    // TODO: Change this to receive the input from a message queue sent by the input task (Future Feature)
+    char *user_query = "Recommend me a show with psychological thriller aspects";
+
     // Create esp http client config
     esp_http_client_config_t config = {
         .url = "https://5001-2604-3d08-9a77-8530-11bb-4c83-cd8f-911.ngrok-free.app",

@@ -175,7 +175,13 @@ gpt2-finetuned-model
 # Vector database
 chroma_db
 
-ESP32/components/secrets/
+# ESP32 Directory
 
-# .vscode
+ESP32/build/
+ESP32/sdkconfig
+ESP32/sdkconfig.old
+ESP32/components/secrets/
+ESP32/.vscode
+
+
 .vscode

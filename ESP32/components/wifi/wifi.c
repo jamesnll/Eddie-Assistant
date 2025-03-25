@@ -34,6 +34,7 @@ void wifi_event_handler(void *event_handler_arg, esp_event_base_t event_base, in
         break;
     case IP_EVENT_STA_GOT_IP:
         printf("Wifi got IP...\n\n");
+        xEventGroupSetBits(wifi_event_group, WIFI_CONNECTED_BIT);  // Set the event bit
         break;
     default:
         break;

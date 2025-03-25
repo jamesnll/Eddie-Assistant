@@ -93,10 +93,15 @@ void http_get_task(void *pvParameters)
 
     snprintf(full_path, sizeof(full_path), "%s%s", base_path, user_query);
 
+    // Place ngrok url address here
+    char base_url[] = "https://e156-2604-3d08-9a77-8530-f452-a671-627d-15d5.ngrok-free.app/";
+    char complete_url[QUERY_LENGTH * 2];
+
+    snprintf(complete_url, sizeof(complete_url), "%s%s", base_url, full_path);
+
     // Create esp http client config
     esp_http_client_config_t config = {
-        .url = "https://5001-2604-3d08-9a77-8530-11bb-4c83-cd8f-911.ngrok-free.app/",
-        .path = full_path,
+        .url = complete_url,
         .event_handler = _http_event_handler,
         .auth_type = HTTP_AUTH_TYPE_NONE,
         .cert_pem = NULL,  // No certificate PEM (self-signed or invalid cert)

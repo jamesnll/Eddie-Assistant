@@ -80,11 +80,23 @@ void http_get_task(void *pvParameters)
 {
     // User query
     // TODO: Change this to receive the input from a message queue sent by the input task (Future Feature)
-    char *user_query = "Recommend me a show with psychological thriller aspects";
+    char user_query[] = "Recommend me a show with psychological thriller aspects";
+
+    // Encode the query
+    encode_query(user_query);
+
+    // Base path
+    char base_path[] = "recommend-shows?query=";
+
+    // Create the full path
+    char full_path[QUERY_LENGTH];
+
+    snprintf(full_path, sizeof(full_path), "%s%s", base_path, user_query);
 
     // Create esp http client config
     esp_http_client_config_t config = {
-        .url = "https://5001-2604-3d08-9a77-8530-11bb-4c83-cd8f-911.ngrok-free.app",
+        .url = "https://5001-2604-3d08-9a77-8530-11bb-4c83-cd8f-911.ngrok-free.app/",
+        .path = full_path,
         .event_handler = _http_event_handler,
         .auth_type = HTTP_AUTH_TYPE_NONE,
         .cert_pem = NULL,  // No certificate PEM (self-signed or invalid cert)

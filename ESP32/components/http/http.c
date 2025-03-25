@@ -70,37 +70,65 @@ void encode_query(char *query)
     encoded_query[encoded_iterator] = '\0';
 
     // Copy the encoded string back to the original query
-    strncpy(query, encoded_query, encoded_iterator);
+    snprintf(query, QUERY_LENGTH, "%s", encoded_query);
+}
+
+void create_full_url(char *base_url, char *base_path, char *user_query, char **result_url)
+{
+    // Get lengths for the full path and the result url
+    size_t full_path_len = strlen(base_path) + strlen(user_query) + 1; // + 1 for '\0'
+    size_t result_url_len = strlen(base_url) + full_path_len + 1; // + 1 for '\0'
+
+    // Get full path endpoint
+    char *full_path = (char *)malloc(sizeof(char) * full_path_len);
+    if (full_path == NULL)
+    {
+        ESP_LOGI("ERROR", "Malloc error when creating full_path");
+        return;
+    }
+
+    snprintf(full_path, full_path_len, "%s%s", base_path, user_query);
+
+    // Get result URL
+    *result_url = (char *)malloc(sizeof(char) * result_url_len);
+    if (*result_url == NULL)
+    {
+        ESP_LOGI("ERROR", "Malloc error when creating result_url");
+        free(full_path);
+        return;
+    }
+
+    snprintf(*result_url, result_url_len, "%s%s", base_url, full_path);
+
+    free(full_path);
 }
 
 // TODO: Clean up this function and try to not use char[] as much, get the length of the strings for better memory management
 // TODO: (Future Feature) Read input from a message queue and append the received data to the config.url
 void http_get_task(void *pvParameters)
 {
-    // User query
-    // TODO: Change this to receive the input from a message queue sent by the input task (Future Feature)
-    char user_query[] = "Recommend me a show with psychological thriller aspects";
-
-    // Encode the query
-    encode_query(user_query);
+    // Place ngrok url address here
+    char base_url[] = "https://e156-2604-3d08-9a77-8530-f452-a671-627d-15d5.ngrok-free.app/";
 
     // Base path
     char base_path[] = "recommend-shows?query=";
 
-    // Create the full path
-    char full_path[QUERY_LENGTH];
+    // User query
+    // TODO: Change this to receive the input from a message queue sent by the input task (Future Feature)
+    char user_query[] = "Recommend me a show with psychological thriller aspects";
 
-    snprintf(full_path, sizeof(full_path), "%s%s", base_path, user_query);
+    // Full URL endpoint for recommendations
+    char *full_url = NULL;
 
-    // Place ngrok url address here
-    char base_url[] = "https://e156-2604-3d08-9a77-8530-f452-a671-627d-15d5.ngrok-free.app/";
-    char complete_url[QUERY_LENGTH * 2];
+    // Encode the query
+    encode_query(user_query);
 
-    snprintf(complete_url, sizeof(complete_url), "%s%s", base_url, full_path);
+    // Create the full url endpoint
+    create_full_url(base_url, base_path, user_query, &full_url);
 
     // Create esp http client config
     esp_http_client_config_t config = {
-        .url = complete_url,
+        .url = full_url,
         .event_handler = _http_event_handler,
         .auth_type = HTTP_AUTH_TYPE_NONE,
         .cert_pem = NULL,  // No certificate PEM (self-signed or invalid cert)
@@ -125,6 +153,7 @@ void http_get_task(void *pvParameters)
     }
 
     // Cleanup and delete task
+    free(full_url);
     esp_http_client_cleanup(client);
     vTaskDelete(NULL);
 }

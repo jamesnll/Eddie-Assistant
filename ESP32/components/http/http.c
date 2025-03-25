@@ -48,6 +48,29 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
 void encode_query(char *query)
 {
     char encoded_query[QUERY_LENGTH];
+    int encoded_iterator = 0;
+
+    // Iterate through query
+    for (int i = 0; query[i] != '\0'; ++i)
+    {
+        if (query[i] == ' ') 
+        {
+            // If space is found, replace with "%20"
+            encoded_query[encoded_iterator++] = '%';
+            encoded_query[encoded_iterator++] = '2';
+            encoded_query[encoded_iterator++] = '0';
+        } else 
+        {
+            // Otherwise, copy the character as it is
+            encoded_query[encoded_iterator++] = query[i];
+        }
+    }
+
+    // Null terminate the encoded query
+    encoded_query[encoded_iterator] = '\0';
+
+    // Copy the encoded string back to the original query
+    strncpy(query, encoded_query, encoded_iterator);
 }
 
 // TODO: Create a string "query" that stores the user query to the recommendation service

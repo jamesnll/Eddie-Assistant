@@ -73,8 +73,7 @@ void encode_query(char *query)
     strncpy(query, encoded_query, encoded_iterator);
 }
 
-// TODO: Create a string "query" that stores the user query to the recommendation service
-// TODO: Append the "query" string to the config.url
+// TODO: Clean up this function and try to not use char[] as much, get the length of the strings for better memory management
 // TODO: (Future Feature) Read input from a message queue and append the received data to the config.url
 void http_get_task(void *pvParameters)
 {

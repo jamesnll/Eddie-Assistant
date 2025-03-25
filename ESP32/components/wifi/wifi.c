@@ -2,6 +2,21 @@
 
 uint32_t retry_num = 0; // number of retries to reconnect to wifi
 
+void attempt_wifi_reconnect()
+{
+    if (retry_num < MAX_RETRIES)
+    {
+        esp_wifi_connect();
+        retry_num++;
+        printf("Attempting to reconnect... (%ld/%d)\n", retry_num, MAX_RETRIES);
+        vTaskDelay(RETRY_DELAY_MS / portTICK_PERIOD_MS); // Delay before retrying to prevent rapid reconnection attempts
+    }
+    else
+    {
+        printf("Max reconnection attempts reached.\n");
+    }
+}
+
 void wifi_event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t event_id,void *event_data)
 {
     switch (event_id)
@@ -11,18 +26,15 @@ void wifi_event_handler(void *event_handler_arg, esp_event_base_t event_base, in
         break;
     case WIFI_EVENT_STA_CONNECTED:
         printf("WiFi CONNECTED\n");
+        retry_num = 0; // Reset retry count when connected
         break;
     case WIFI_EVENT_STA_DISCONNECTED:
         printf("WiFi lost connection\n");
-        if(retry_num<5)
-        {
-            esp_wifi_connect();
-            retry_num++;
-            printf("Retrying to Connect...\n");
-        }
+        attempt_wifi_reconnect();
         break;
     case IP_EVENT_STA_GOT_IP:
         printf("Wifi got IP...\n\n");
+        xEventGroupSetBits(wifi_event_group, WIFI_CONNECTED_BIT);  // Set the event bit
         break;
     default:
         break;
@@ -51,7 +63,7 @@ void wifi_connection()
     esp_wifi_start(); // start connection with configs provided in function
     esp_wifi_set_mode(WIFI_MODE_STA); // station mode selected
     esp_wifi_connect(); // connect with saved ssid and password
-    printf("wifi_init_softap finished. SSID: %s\tPassword: %s\n", SECRET_SSID, SECRET_PASSWORD);
+    printf("wifi_init_softap finished.\nSSID: %s\nPassword: %s\n", SECRET_SSID, SECRET_PASSWORD);
 }
 
 // FreeRTOS task to check Wi-Fi status and reconnect if necessary
@@ -60,7 +72,7 @@ void wifi_check_task(void *pvParameter) {
         wifi_ap_record_t ap_info;
         if (esp_wifi_sta_get_ap_info(&ap_info) != ESP_OK) {
             printf("Wi-Fi is disconnected, attempting to reconnect...\n");
-            esp_wifi_connect();
+            attempt_wifi_reconnect();
         } else {
             printf("Wi-Fi is connected.\n");
         }

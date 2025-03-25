@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #define TAG "HTTP_CLIENT"
+#define QUERY_LENGTH 1024
 
 // TODO: Once we receive the data, send it into a message queue to be used by another FreeRTOS task (Future feature)
 static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
@@ -42,6 +43,11 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
     }
 
     return ESP_OK;
+}
+
+void encode_query(char *query)
+{
+    char encoded_query[QUERY_LENGTH];
 }
 
 // TODO: Create a string "query" that stores the user query to the recommendation service

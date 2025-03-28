@@ -7,7 +7,7 @@
 #define TAG "HTTP_CLIENT"
 #define QUERY_LENGTH 1024
 
-// TODO: Once we receive the data, send it into a message queue to be used by another FreeRTOS task (Future feature)
+
 static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
 {
     switch (evt->event_id)
@@ -109,7 +109,6 @@ void create_full_url(char *base_url, char *base_path, char *user_query, char **r
     free(full_path);
 }
 
-// TODO: Clean up this function and try to not use char[] as much, get the length of the strings for better memory management
 // TODO: (Future Feature) Read input from a message queue and append the received data to the config.url
 void http_get_task(void *pvParameters)
 {

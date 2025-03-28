@@ -18,7 +18,11 @@ void queue_init()
     }
 }
 
-int queue_send()
+int queue_send(char *msg)
 {
+    int result;
 
+    result = xQueueSend(queue_handle, &msg, (TickType_t) 0);
+
+    return result;
 }

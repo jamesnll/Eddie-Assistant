@@ -12,7 +12,7 @@
 extern QueueHandle_t queue_handle;
 
 void queue_init();
-int queue_send();
+int queue_send(char *msg);
 int queue_receive();
 
 #endif // QUEUE_WRAPPER_H

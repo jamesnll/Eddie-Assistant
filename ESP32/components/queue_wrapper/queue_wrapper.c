@@ -26,3 +26,12 @@ int queue_send(char *msg)
 
     return result;
 }
+
+int queue_receive(char **buffer)
+{
+    int result;
+
+    result = xQueueReceive(queue_handle, *buffer, (TickType_t) 0);
+
+    return result;
+}

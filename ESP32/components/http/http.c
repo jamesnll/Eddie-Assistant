@@ -29,8 +29,13 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
 
         // Print received data
         // TODO: Modify this to send it to a message queue (can keep this for logging, for example: %s was written to the message queue)
+        if (queue_send(evt->data) < 0)
+        {
+            ESP_LOGI(TAG, "QUEUE_WRAPPER: Failed to send data to the queue.");
+        }
+
         if (evt->data && evt->data_len > 0) { 
-            ESP_LOGI(TAG, "Received Data: %.*s", evt->data_len, (char*)evt->data);
+            ESP_LOGI(TAG, "QUEUE_WRAPPER: Sent %.*s to the message queue", evt->data_len, (char*)evt->data);
         }
         break;
     case HTTP_EVENT_ON_FINISH:
@@ -109,7 +114,7 @@ void create_full_url(char *base_url, char *base_path, char *user_query, char **r
 void http_get_task(void *pvParameters)
 {
     // Place ngrok url address here
-    char base_url[] = "https://e156-2604-3d08-9a77-8530-f452-a671-627d-15d5.ngrok-free.app/";
+    char base_url[] = "https://e5b1-2604-3d08-9a77-8530-b5fd-79d6-c497-24a7.ngrok-free.app/";
 
     // Base path
     char base_path[] = "recommend-shows?query=";

@@ -17,3 +17,8 @@ void queue_init()
         printf("Queue already created.\n");
     }
 }
+
+int queue_send()
+{
+
+}

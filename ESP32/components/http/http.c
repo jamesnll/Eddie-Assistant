@@ -27,13 +27,13 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
     case HTTP_EVENT_ON_DATA:
         ESP_LOGI(TAG, "HTTP_EVENT_ON_DATA: Received %d bytes.", evt->data_len);
 
-        // Print received data
-        // TODO: Modify this to send it to a message queue (can keep this for logging, for example: %s was written to the message queue)
+        // Send message into the queue, print an error if it fails
         if (queue_send(evt->data) < 0)
         {
             ESP_LOGI(TAG, "QUEUE_WRAPPER: Failed to send data to the queue.");
         }
 
+        // Log message to check if the message was sent into the queue
         if (evt->data && evt->data_len > 0) { 
             ESP_LOGI(TAG, "QUEUE_WRAPPER: Sent %.*s to the message queue", evt->data_len, (char*)evt->data);
         }

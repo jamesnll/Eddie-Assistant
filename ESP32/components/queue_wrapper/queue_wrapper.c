@@ -1,5 +1,8 @@
 #include "queue_wrapper.h"
 
+// Queue Handle
+QueueHandle_t queue_handle;
+
 void queue_init()
 {
     // Only create a single instance

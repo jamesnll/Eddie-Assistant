@@ -5,6 +5,7 @@
 #include "secrets.h"
 #include "wifi.h"
 #include "http.h"
+#include "queue_wrapper.h"
 
 
 #define LED_PIN 2  // Pin number for the built-in LED
@@ -25,6 +26,9 @@ void app_main(void)
 
     // Wait for the Wi-Fi connection before starting the HTTP task
     xEventGroupWaitBits(wifi_event_group, WIFI_CONNECTED_BIT, pdFALSE, pdTRUE, portMAX_DELAY);  // Wait for the Wi-Fi connection bit
+
+    // Create the queue
+    queue_init();
 
     // Start the HTTP GET task after Wi-Fi is connected
     xTaskCreate(&http_get_task, "http_get_task", 8192, NULL, 5, NULL);

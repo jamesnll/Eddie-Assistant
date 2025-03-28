@@ -1,0 +1,6 @@
+#ifndef QUEUE_WRAPPER_H
+#define QUEUE_WRAPPER_H
+
+
+
+#endif // QUEUE_WRAPPER_H

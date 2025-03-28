@@ -2,11 +2,18 @@
 
 void queue_init()
 {
-    // TODO: Turn this into a singleton if possible
-    queue_handle = xQueueCreate(QUEUE_SIZE, QUEUE_ITEM_SIZE);
-
+    // Only create a single instance
     if (queue_handle == NULL)
     {
-        printf("Failed to create queue.\n");
+        queue_handle = xQueueCreate(QUEUE_SIZE, QUEUE_ITEM_SIZE);
+
+        if (queue_handle == NULL)
+        {
+            printf("Failed to create queue.\n");
+        }
+    }
+    else
+    {
+        printf("Queue already created.\n");
     }
 }

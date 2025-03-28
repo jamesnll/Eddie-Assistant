@@ -1,4 +1,5 @@
 #include "http.h"
+#include "queue_wrapper.h"
 #include "esp_log.h"
 #include "esp_http_client.h"
 #include <stdio.h>
@@ -6,7 +7,7 @@
 #define TAG "HTTP_CLIENT"
 #define QUERY_LENGTH 1024
 
-// TODO: Once we receive the data, send it into a message queue to be used by another FreeRTOS task (Future feature)
+
 static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
 {
     switch (evt->event_id)
@@ -26,10 +27,15 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
     case HTTP_EVENT_ON_DATA:
         ESP_LOGI(TAG, "HTTP_EVENT_ON_DATA: Received %d bytes.", evt->data_len);
 
-        // Print received data
-        // TODO: Modify this to send it to a message queue (can keep this for logging, for example: %s was written to the message queue)
+        // Send message into the queue, print an error if it fails
+        if (queue_send(evt->data) < 0)
+        {
+            ESP_LOGI(TAG, "QUEUE_WRAPPER: Failed to send data to the queue.");
+        }
+
+        // Log message to check if the message was sent into the queue
         if (evt->data && evt->data_len > 0) { 
-            ESP_LOGI(TAG, "Received Data: %.*s", evt->data_len, (char*)evt->data);
+            ESP_LOGI(TAG, "QUEUE_WRAPPER: Sent %.*s to the message queue", evt->data_len, (char*)evt->data);
         }
         break;
     case HTTP_EVENT_ON_FINISH:
@@ -59,7 +65,8 @@ void encode_query(char *query)
             encoded_query[encoded_iterator++] = '%';
             encoded_query[encoded_iterator++] = '2';
             encoded_query[encoded_iterator++] = '0';
-        } else 
+        }
+        else 
         {
             // Otherwise, copy the character as it is
             encoded_query[encoded_iterator++] = query[i];
@@ -103,12 +110,11 @@ void create_full_url(char *base_url, char *base_path, char *user_query, char **r
     free(full_path);
 }
 
-// TODO: Clean up this function and try to not use char[] as much, get the length of the strings for better memory management
 // TODO: (Future Feature) Read input from a message queue and append the received data to the config.url
 void http_get_task(void *pvParameters)
 {
     // Place ngrok url address here
-    char base_url[] = "https://e156-2604-3d08-9a77-8530-f452-a671-627d-15d5.ngrok-free.app/";
+    char base_url[] = "https://e5b1-2604-3d08-9a77-8530-b5fd-79d6-c497-24a7.ngrok-free.app/";
 
     // Base path
     char base_path[] = "recommend-shows?query=";

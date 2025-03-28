@@ -65,7 +65,8 @@ void encode_query(char *query)
             encoded_query[encoded_iterator++] = '%';
             encoded_query[encoded_iterator++] = '2';
             encoded_query[encoded_iterator++] = '0';
-        } else 
+        }
+        else 
         {
             // Otherwise, copy the character as it is
             encoded_query[encoded_iterator++] = query[i];

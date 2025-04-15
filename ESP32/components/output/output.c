@@ -8,7 +8,7 @@ void output_task(void *pvParameters)
     char *buffer = NULL;
     if (queue_receive(&buffer) == pdPASS && buffer != NULL)
     {
-        ESP_LOGI(TAG, "%s", buffer);
+        ESP_LOGI(TAG, "%s", buffer); // TODO: Fix garbage data outputs after the logging statement
     }
     else
     {

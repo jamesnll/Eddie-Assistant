@@ -114,7 +114,7 @@ void create_full_url(char *base_url, char *base_path, char *user_query, char **r
 void http_get_task(void *pvParameters)
 {
     // Place ngrok url address here
-    char base_url[] = "https://e5b1-2604-3d08-9a77-8530-b5fd-79d6-c497-24a7.ngrok-free.app/";
+    char base_url[] = "https://ede4-2604-3d08-9a77-8530-5037-97a4-b7e4-9394.ngrok-free.app/";
 
     // Base path
     char base_path[] = "recommend-shows?query=";

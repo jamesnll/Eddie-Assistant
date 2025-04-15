@@ -13,6 +13,6 @@ extern QueueHandle_t queue_handle;
 
 void queue_init();
 int queue_send(char *msg);
-int queue_receive(char *buffer);
+int queue_receive(char **msg_ptr);
 
 #endif // QUEUE_WRAPPER_H

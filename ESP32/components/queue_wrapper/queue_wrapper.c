@@ -30,11 +30,11 @@ int queue_send(char *msg)
     return result;
 }
 
-int queue_receive(char *buffer)
+int queue_receive(char **msg_ptr)
 {
     int result;
 
-    result = xQueueReceive(queue_handle, buffer, (TickType_t) 0);
+    result = xQueueReceive(queue_handle, msg_ptr, (TickType_t) 0);
 
     return result;
 }

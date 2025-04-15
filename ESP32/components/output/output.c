@@ -1,4 +1,5 @@
 #include "output.h"
+#include "queue_wrapper.h"
 
 void output_task(void *pvParameters)
 {

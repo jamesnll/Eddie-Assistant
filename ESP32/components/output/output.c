@@ -6,8 +6,8 @@ void output_task(void *pvParameters)
     // Phase 1: Output response to terminal
     // TODO: Read HTTP response from the queue
     char buffer[BUFFER_SIZE];
-    queue_receive(&buffer);
-    ESP_LOGI(TAG, buffer);
+    queue_receive(buffer);
+    ESP_LOGI(TAG, "%s", buffer);
     // TODO: Process JSON response to retrieve the show recommendations (this should be a seperate function -> either in output or http directory)
     // TODO: Output the processed response to the terminal
 

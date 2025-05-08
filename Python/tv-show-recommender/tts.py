@@ -1,6 +1,7 @@
+from gtts import gTTS
+
 def text_to_speech():
     # TODOs
-    # Include GTTS library
     # Parameters should be an input string and output_path string
     # Setup GTTS object
     # Convert the text into speech

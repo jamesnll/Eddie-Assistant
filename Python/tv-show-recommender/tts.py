@@ -3,7 +3,7 @@ from gtts import gTTS
 def text_to_speech(input: str, output_path: str):
     # TODOs
     # Any error handling as required
-    
+
     # Define TTS language and accent
     language = "en"
     accent = "co.uk"
@@ -15,3 +15,9 @@ def text_to_speech(input: str, output_path: str):
     tts.save(output_path)
     # Return the output_path
     return output_path
+
+
+if __name__ == '__main__':
+    input = "My name is Eddie"
+    output_path = "test.mp3"
+    text_to_speech(input, output_path)

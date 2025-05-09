@@ -9,8 +9,7 @@ from tts import text_to_speech
 app = Flask(__name__) # Create Flask app
 
 # TODOs
-# Implement TTS function into recommend-shows route
-# Send the MP3 file as the response instead of the JSON list
+
 
 @app.route('/')
 def home():

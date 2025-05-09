@@ -42,7 +42,7 @@ def recommend_shows():
     output_path = text_to_speech(results)
 
     # Output audio file path
-    print(output_path)
+    print("Audio output path:" + output_path)
 
     # Return the output as JSON
     return jsonify({"recommendations": results}), 200

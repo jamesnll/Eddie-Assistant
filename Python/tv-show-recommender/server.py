@@ -4,6 +4,7 @@ from urllib.parse import unquote
 import os
 
 from vector_search import get_recommendations
+from tts import text_to_speech
 
 app = Flask(__name__) # Create Flask app
 
@@ -34,7 +35,14 @@ def recommend_shows():
     # Query the recommendation service
     results = get_recommendations(decoded_query)
 
+    # Output recommendation text
     print("Results: " + str(results))
+
+    # Convert recommendations to speech
+    output_path = text_to_speech(results)
+
+    # Output audio file path
+    print(output_path)
 
     # Return the output as JSON
     return jsonify({"recommendations": results}), 200

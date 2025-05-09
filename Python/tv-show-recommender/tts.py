@@ -1,6 +1,6 @@
 from gtts import gTTS
 
-def text_to_speech(input: str, output_path: str):
+def text_to_speech(input: str):
     # TODOs
     # Any error handling as required
 

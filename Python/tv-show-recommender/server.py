@@ -9,7 +9,7 @@ from tts import text_to_speech
 app = Flask(__name__) # Create Flask app
 
 # TODOs
-
+# Create a logging folder that saves the input request and output response as pairs
 
 @app.route('/')
 def home():

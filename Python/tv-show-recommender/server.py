@@ -1,5 +1,5 @@
 # Imports
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from urllib.parse import unquote
 import os
 
@@ -44,8 +44,12 @@ def recommend_shows():
     # Output audio file path
     print("Audio output path:" + output_path)
 
-    # Return the output as JSON
-    return jsonify({"recommendations": results}), 200
+    # Return the output audio file
+    return send_file(
+        output_path, 
+        mimetype='audio/mpeg', 
+        as_attachment=False  # Set to True if you want it to download instead of stream
+    )
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8000)

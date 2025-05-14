@@ -6,5 +6,6 @@
 extern StreamBufferHandle_t input_stream_buffer;  // Input to HTTP
 extern StreamBufferHandle_t output_stream_buffer; // HTTP to output
 
+int init_stream_buffer(void);
 
 #endif // STREAM_BUFFER_H

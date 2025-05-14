@@ -29,5 +29,18 @@ int init_input_stream_buffer(void)
 
 int init_output_stream_buffer(void)
 {
+    // Check if output_stream_buffer isn't already created
+    if (!output_stream_buffer)
+    {
+        // Create the buffer
+        output_stream_buffer = xStreamBufferCreate(OUTPUT_STREAM_BUFFER_SIZE, TRIGGER_LEVEL);
+        // Error check
+        if (!output_stream_buffer)
+        {
+            printf("Error creating output stream buffer!\n");
+            return -1;
+        }
+    }
 
+    return 0;
 }

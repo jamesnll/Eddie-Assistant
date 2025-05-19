@@ -6,6 +6,7 @@
 #include "wifi.h"
 #include "http.h"
 #include "queue_wrapper.h"
+#include "stream_buf.h"
 #include "output.h"
 
 // TODO
@@ -32,6 +33,12 @@ void app_main(void)
     // Wait for the Wi-Fi connection before starting the HTTP task
     xEventGroupWaitBits(wifi_event_group, WIFI_CONNECTED_BIT, pdFALSE, pdTRUE, portMAX_DELAY);  // Wait for the Wi-Fi connection bit
 
+    // Initialize the output stream buffer
+    if (init_output_stream_buffer() == -1)
+    {
+        return;
+    }
+    
     // Create the queue
     queue_init();
 

@@ -1,5 +1,4 @@
 #include "http.h"
-#include "queue_wrapper.h"
 #include "esp_log.h"
 #include "esp_http_client.h"
 #include "stream_buf.h"
@@ -7,10 +6,6 @@
 
 #define TAG "HTTP_CLIENT"
 #define QUERY_LENGTH 1024
-
-// TODOs
-// Include stream buffer library
-// Send HTTP response to the output stream buffer
 
 static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
 {

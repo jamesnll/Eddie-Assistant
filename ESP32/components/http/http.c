@@ -31,15 +31,19 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
     case HTTP_EVENT_ON_DATA:
         ESP_LOGI(TAG, "HTTP_EVENT_ON_DATA: Received %d bytes.", evt->data_len);
 
-        // Send message into the queue, print an error if it fails
-        if (queue_send(evt->data) < 0)
+        // Check for data and send it into the output stream buffer
+        if (evt->data && evt->data_len > 0)
         {
-            ESP_LOGI(TAG, "QUEUE_WRAPPER: Failed to send data to the queue.");
-        }
+            size_t bytes_sent = xStreamBufferSend(output_stream_buf, evt->data, evt->data_len, pdMS_TO_TICKS(100));
 
-        // Log message to check if the message was sent into the queue
-        if (evt->data && evt->data_len > 0) { 
-            ESP_LOGI(TAG, "QUEUE_WRAPPER: Sent %.*s to the message queue", evt->data_len, (char*)evt->data);
+            if (bytes_sent != evt->data_len)
+            {
+                ESP_LOGI(TAG, "STREAM_BUFFER: Only sent %d out of %d bytes", bytes_sent, evt->data_len);
+            } 
+            else
+            {
+                ESP_LOGI(TAG, "STREAM_BUFFER: Wrote %d bytes to output stream buffer", bytes_sent);
+            }
         }
         break;
     case HTTP_EVENT_ON_FINISH:

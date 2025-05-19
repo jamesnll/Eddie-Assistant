@@ -2,6 +2,7 @@
 #include "queue_wrapper.h"
 #include "esp_log.h"
 #include "esp_http_client.h"
+#include "stream_buf.h"
 #include <stdio.h>
 
 #define TAG "HTTP_CLIENT"

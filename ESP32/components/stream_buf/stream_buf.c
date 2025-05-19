@@ -2,25 +2,25 @@
 #include <stdio.h>
 
 // Macros
-#define INPUT_STREAM_BUFFER_SIZE  1024
-#define OUTPUT_STREAM_BUFFER_SIZE 1024
+#define INPUT_STREAM_BUF_SIZE  1024
+#define OUTPUT_STREAM_BUF_SIZE 1024
 #define TRIGGER_LEVEL             1
 
 // Stream buffer definitions
-StreamBufferHandle_t input_stream_buffer = NULL;
-StreamBufferHandle_t output_stream_buffer = NULL;
+StreamBufferHandle_t input_stream_buf = NULL;
+StreamBufferHandle_t output_stream_buf = NULL;
 
-int init_input_stream_buffer(void)
+int init_input_stream_buf(void)
 {
-    // Check if input_stream_buffer isn't already created
-    if (!input_stream_buffer)
+    // Check if input_stream_buf isn't already created
+    if (!input_stream_buf)
     {
-        // Create the buffer
-        input_stream_buffer = xStreamBufferCreate(INPUT_STREAM_BUFFER_SIZE, TRIGGER_LEVEL);
+        // Create the buf
+        input_stream_buf = xStreamBufferCreate(INPUT_STREAM_BUF_SIZE, TRIGGER_LEVEL);
         // Error check
-        if (!input_stream_buffer)
+        if (!input_stream_buf)
         {
-            printf("Error creating input stream buffer!\n");
+            printf("Error creating input stream buf!\n");
             return -1;
         }
     }
@@ -28,17 +28,17 @@ int init_input_stream_buffer(void)
     return 0;
 }
 
-int init_output_stream_buffer(void)
+int init_output_stream_buf(void)
 {
-    // Check if output_stream_buffer isn't already created
-    if (!output_stream_buffer)
+    // Check if output_stream_buf isn't already created
+    if (!output_stream_buf)
     {
-        // Create the buffer
-        output_stream_buffer = xStreamBufferCreate(OUTPUT_STREAM_BUFFER_SIZE, TRIGGER_LEVEL);
+        // Create the buf
+        output_stream_buf = xStreamBufferCreate(OUTPUT_STREAM_BUF_SIZE, TRIGGER_LEVEL);
         // Error check
-        if (!output_stream_buffer)
+        if (!output_stream_buf)
         {
-            printf("Error creating output stream buffer!\n");
+            printf("Error creating output stream buf!\n");
             return -1;
         }
     }

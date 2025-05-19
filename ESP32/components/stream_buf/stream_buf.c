@@ -1,4 +1,5 @@
-#include "stream_buffer.h"
+#include "stream_buf.h"
+#include <stdio.h>
 
 // Macros
 #define INPUT_STREAM_BUFFER_SIZE  1024

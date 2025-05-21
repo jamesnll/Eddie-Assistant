@@ -52,7 +52,10 @@ void output_task(void *pvParameters)
                 ESP_LOGI(TAG, "Decoded %d samples @ %d Hz, %d channels.",
                         samples, mp3_info.hz, mp3_info.channels);
 
-                // TODO: Load PCM data into MAX98357 component
+                /* TODOs: 
+                Load PCM data into MAX98357 component
+                Output audio via speaker
+                */
             }
 
             // Move ptr past the decoded frame
@@ -69,9 +72,4 @@ void output_task(void *pvParameters)
 
     // End the task
     vTaskDelete(NULL);
-
-    /* TODOs: 
-    4. Load PCM data into MAX98357 component
-    5. Output audio via speaker
-    */
 }

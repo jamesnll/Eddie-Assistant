@@ -5,7 +5,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 # Include components folder
-set(EXTRA_COMPONENT_DIRS components components/secrets components/wifi components/http components/queue_wrapper components/output components/stream_buf)
+set(EXTRA_COMPONENT_DIRS components components/secrets components/wifi components/http components/queue_wrapper components/output components/stream_buf components/minimp3)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(ESP32)

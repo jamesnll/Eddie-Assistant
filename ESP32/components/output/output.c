@@ -67,6 +67,8 @@ void output_task(void *pvParameters)
         }
     }
 
+    // End the task
+    vTaskDelete(NULL);
 
     /* TODOs: 
     

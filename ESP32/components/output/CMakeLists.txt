@@ -1,2 +1,2 @@
 idf_component_register(SRCS "output.c"
-                       INCLUDE_DIRS "." "../queue_wrapper")
+                       INCLUDE_DIRS "." "../stream_buf")

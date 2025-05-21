@@ -5,6 +5,10 @@
 #define TAG "OUTPUT"
 void output_task(void *pvParameters)
 {
+    // Init minimp3 decoder
+    mp3dec_t mp3d;
+    mp3dec_init(&mp3d);
+    
     /* TODOs: 
     
     2. Load mp3 from flash

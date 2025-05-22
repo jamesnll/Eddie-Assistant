@@ -94,10 +94,16 @@ static void decode_and_play_mp3_stream(void)
                 ESP_LOGI(TAG, "Decoded %d samples @ %d Hz, %d channels.",
                         samples, mp3_info.hz, mp3_info.channels);
 
-                /* TODOs: 
-                Load PCM data into MAX98357 component
-                Output audio via speaker
-                */
+                // Update sample rate to decoded sample
+                i2s_set_sample_rates(I2S_NUM_0, mp3_info.hz);
+
+                // Output PCM to I2S
+                size_t bytes_written = 0;
+                i2s_write(I2S_NUM_0, pcm,
+                          samples * mp3_info.channels * sizeof(int16_t),
+                          &bytes_written, portMAX_DELAY);
+
+                ESP_LOGD(TAG, "Wrote %u bytes to I2S", bytes_written);
             }
 
             // Move ptr past the decoded frame
@@ -118,7 +124,7 @@ void output_task(void *pvParameters)
 {
     // Initialize I2S driver
     i2s_init();
-    
+
     // Decode MP3 from output_stream_buf
     decode_and_play_mp3_stream();
 

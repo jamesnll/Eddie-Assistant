@@ -10,8 +10,7 @@
 #include "output.h"
 
 // TODO
-// Include stream buffer
-// Initialize input/output stream buffers
+// Initialize input stream buffers
 
 
 #define LED_PIN 2  // Pin number for the built-in LED

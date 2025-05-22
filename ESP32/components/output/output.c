@@ -5,7 +5,8 @@
 #define MP3_BUFFER_SIZE 2048
 
 #define TAG "OUTPUT"
-void output_task(void *pvParameters)
+
+static void decode_and_play_mp3_stream(void)
 {
     // Init minimp3 decoder
     mp3dec_t mp3d;
@@ -69,6 +70,12 @@ void output_task(void *pvParameters)
             }
         }
     }
+}
+
+void output_task(void *pvParameters)
+{
+    // Decode MP3 from output_stream_buf
+    decode_and_play_mp3_stream();
 
     // End the task
     vTaskDelete(NULL);

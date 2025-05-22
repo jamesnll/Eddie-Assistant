@@ -18,7 +18,20 @@
 
 static void i2s_init()
 {
-
+    i2s_config_t i2s_config = 
+    {
+        .mode = I2S_MODE_MASTER | I2S_MODE_TX, // Master, TX only
+        .sample_rate = I2S_SAMPLE_RATE, // Default num, will be changed with decoded sample rate later
+        .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,
+        .channel_format = I2S_CHANNEL_FMT_RIGHT_LEFT, // Stereo channel
+        .communication_format = I2S_COMM_FORMAT_I2S_MSB,
+        .intr_alloc_flags = 0, // Default interrupt priority
+        .dma_buf_count = 8,
+        .dma_buf_len = 1024,
+        .use_apll = false,
+        .tx_desc_auto_clear = true,
+        .fixed_mclk = 0
+    };
 }
 
 static void decode_and_play_mp3_stream(void)

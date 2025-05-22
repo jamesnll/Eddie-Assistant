@@ -1,5 +1,6 @@
 #define MINIMP3_IMPLEMENTATION
 #include "minimp3.h"
+#include "driver/i2s.h"
 #include "output.h"
 
 #define MP3_BUFFER_SIZE 2048

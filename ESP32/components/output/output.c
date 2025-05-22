@@ -40,6 +40,11 @@ static void i2s_init()
         .data_out_num = I2S_DO_IO,
         .data_in_num = -1 // Not used
     };
+    
+    // Install and start I2S driver
+    i2s_driver_install(I2S_NUM, &i2s_config, 0, NULL);
+    i2s_set_pin(I2S_NUM, &pin_config);
+    i2s_zero_dma_buffer(I2S_NUM);
 }
 
 static void decode_and_play_mp3_stream(void)

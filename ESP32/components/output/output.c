@@ -72,6 +72,7 @@ static void decode_and_play_mp3_stream(void)
     }
 }
 
+// FreeRTOS task that handles decoding and outputting MP3 via minimp3 and I2S
 void output_task(void *pvParameters)
 {
     // Decode MP3 from output_stream_buf

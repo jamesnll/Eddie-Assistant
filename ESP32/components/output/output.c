@@ -32,6 +32,14 @@ static void i2s_init()
         .tx_desc_auto_clear = true,
         .fixed_mclk = 0
     };
+
+    i2s_pin_config_t pin_config = 
+    {
+        .bck_io_num = I2S_BCK_IO,
+        .ws_io_num = I2S_WS_IO,
+        .data_out_num = I2S_DO_IO,
+        .data_in_num = -1 // Not used
+    };
 }
 
 static void decode_and_play_mp3_stream(void)

@@ -16,6 +16,11 @@
 
 #define TAG "OUTPUT"
 
+static void i2s_init()
+{
+
+}
+
 static void decode_and_play_mp3_stream(void)
 {
     // Init minimp3 decoder

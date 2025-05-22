@@ -1,7 +1,16 @@
 #define MINIMP3_IMPLEMENTATION
+
+// Component Includes
 #include "minimp3.h"
 #include "driver/i2s.h"
 #include "output.h"
+
+// I2S Macros
+#define I2S_NUM         (0)
+#define I2S_SAMPLE_RATE 44100
+#define I2S_BCK_IO      GPIO_NUM_26   // Bit Clock pin
+#define I2S_WS_IO       GPIO_NUM_25   // Word Select (LRCLK) pin
+#define I2S_DO_IO       GPIO_NUM_22   // Data Out pin
 
 #define MP3_BUFFER_SIZE 2048
 

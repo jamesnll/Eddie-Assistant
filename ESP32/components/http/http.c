@@ -124,7 +124,7 @@ void http_get_task(void *pvParameters)
 
     // User query
     // TODO: Change this to receive the input from a message queue sent by the input task (Future Feature)
-    char user_query[] = "Recommend me a show with psychological thriller aspects";
+    char user_query[] = "A TV show similar to Breaking Bad";
 
     // Full URL endpoint for recommendations
     char *full_url = NULL;

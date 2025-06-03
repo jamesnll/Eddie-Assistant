@@ -1,6 +1,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/event_groups.h"
+#include "esp_log.h"
 #include "driver/gpio.h"
 #include "secrets.h"
 #include "wifi.h"
@@ -9,8 +10,7 @@
 #include "stream_buf.h"
 #include "output.h"
 
-// TODO
-// Initialize input stream buffers
+#define TAG "MAIN"
 
 
 #define LED_PIN 2  // Pin number for the built-in LED
@@ -42,12 +42,14 @@ void app_main(void)
     queue_init();
 
     // Start the HTTP GET task after Wi-Fi is connected
-    xTaskCreate(&http_get_task, "http_get_task", 8192, NULL, 5, NULL);
+    ESP_LOGI(TAG, "Free heap before I2S init: %" PRIu32 " bytes", esp_get_free_heap_size());
+    xTaskCreate(&http_get_task, "http_get_task", 12288, NULL, 5, NULL);
 
-    vTaskDelay(5000 / portTICK_PERIOD_MS);  // Wait for 5 seconds to send the HTTP Request (Fix later, have task created without delay then use sleep cycle)
+    vTaskDelay(2000 / portTICK_PERIOD_MS);  // Wait for 5 seconds to send the HTTP Request (Fix later, have task created without delay then use sleep cycle)
 
     // Start the Output task
-    xTaskCreate(&output_task, "output_task", 4096, NULL, 5, NULL);
+    ESP_LOGI(TAG, "Free heap before I2S init: %" PRIu32 " bytes", esp_get_free_heap_size());
+    xTaskCreate(&output_task, "output_task", 20480, NULL, 6, NULL);
 
     // Configure the I/O pin for output
     gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);

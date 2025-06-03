@@ -3,7 +3,7 @@
 
 // Macros
 #define INPUT_STREAM_BUF_SIZE  1024
-#define OUTPUT_STREAM_BUF_SIZE 1024
+#define OUTPUT_STREAM_BUF_SIZE 32768
 #define TRIGGER_LEVEL             1
 
 // Stream buffer definitions

@@ -188,7 +188,7 @@ static size_t read_stream_data(uint8_t *buffer, size_t max_size, size_t current_
     
     if (bytes_read > 0) {
         stream_read_successes++;
-        ESP_LOGI(TAG, "Read %zu bytes from stream (available: %zu)", bytes_read, available);
+    //    ESP_LOGI(TAG, "Read %zu bytes from stream (available: %zu)", bytes_read, available);
         
         // Debug first few reads
         if (stream_read_successes <= 3) {

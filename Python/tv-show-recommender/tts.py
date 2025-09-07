@@ -5,6 +5,8 @@ def text_to_speech(input: list):
     # Any error handling as required
     output_path = "test.mp3"
 
+    return output_path
+
     # Define TTS language and accent
     language = "en"
     accent = "co.uk"

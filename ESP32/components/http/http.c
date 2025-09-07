@@ -24,21 +24,10 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
         ESP_LOGI(TAG, "HTTP_EVENT_ON_HEADER: Received headers successfully.");
         break;
     case HTTP_EVENT_ON_DATA:
-    //    ESP_LOGI(TAG, "HTTP_EVENT_ON_DATA: Received %d bytes.", evt->data_len);
-
         // Check for data and send it into the output stream buffer
         if (evt->data && evt->data_len > 0)
         {
             size_t bytes_sent = xStreamBufferSend(output_stream_buf, evt->data, evt->data_len, pdMS_TO_TICKS(100));
-
-            if (bytes_sent != evt->data_len)
-            {
-            //    ESP_LOGI(TAG, "STREAM_BUFFER: Only sent %d out of %d bytes", bytes_sent, evt->data_len);
-            } 
-            else
-            {
-            //    ESP_LOGI(TAG, "STREAM_BUFFER: Wrote %d bytes to output stream buffer", bytes_sent);
-            }
         }
         break;
     case HTTP_EVENT_ON_FINISH:
@@ -117,7 +106,7 @@ void create_full_url(char *base_url, char *base_path, char *user_query, char **r
 void http_get_task(void *pvParameters)
 {
     // Place ngrok url address here
-    char base_url[] = "https://7b273d2e9c55.ngrok-free.app/";
+    char base_url[] = "https://5be25ad6452a.ngrok-free.app/";
 
     // Base path
     char base_path[] = "recommend-shows?query=";

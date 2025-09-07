@@ -213,13 +213,6 @@ static void decode_and_play_mp3_stream(void)
     while (1) {
         loop_count++;
         
-        // Periodic status
-        if (loop_count % 1000 == 0) {
-            size_t available = xStreamBufferBytesAvailable(output_stream_buf);
-            ESP_LOGI(TAG, "Loop %lu: Buffer used: %zu, Stream available: %zu, Frames: %lu, Errors: %zu", 
-                     loop_count, mp3_buf_used, available, frames_decoded, consecutive_errors);
-        }
-        
         // Reset on too many errors
         if (consecutive_errors > MAX_CONSECUTIVE_ERRORS) {
             ESP_LOGW(TAG, "Too many errors, resetting decoder");
@@ -278,18 +271,11 @@ static void decode_and_play_mp3_stream(void)
         
         // Decode frame
         int samples = mp3dec_decode_frame(g_mp3d, g_mp3_buf, (int)mp3_buf_used, g_pcm_buf, g_mp3_info);
-
-        ESP_LOGI(TAG, "SAMPLES: %d, frame_bytes: %d", samples, g_mp3_info->frame_bytes);
         
         // Handle decode result
         if (samples > 0) {
             consecutive_errors = 0;
             frames_decoded++;
-            
-            if (frames_decoded % 50 == 0) {
-                ESP_LOGI(TAG, "Frame %lu: %d samples, %dHz, %dch, %d bytes", 
-                         frames_decoded, samples, g_mp3_info->hz, g_mp3_info->channels, g_mp3_info->frame_bytes);
-            }
             
             // Validate parameters
             if (g_mp3_info->hz < 8000 || g_mp3_info->hz > 48000 || 
@@ -408,7 +394,6 @@ handle_frame_removal:
                 if (mp3_buf_used > 0) {
                     memmove(g_mp3_buf, g_mp3_buf + g_mp3_info->frame_bytes, mp3_buf_used);
                 }
-                ESP_LOGI(TAG, "Removed %d bytes from buffer, %zu bytes remaining", g_mp3_info->frame_bytes, mp3_buf_used);
             }
         } else if (g_mp3_info->frame_bytes > 0) {
             ESP_LOGW(TAG, "Invalid frame_bytes: %d (buffer: %zu)", g_mp3_info->frame_bytes, mp3_buf_used);

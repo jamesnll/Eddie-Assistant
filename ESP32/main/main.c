@@ -6,9 +6,9 @@
 #include "secrets.h"
 #include "wifi.h"
 #include "http.h"
-#include "queue_wrapper.h"
 #include "stream_buf.h"
 #include "output.h"
+#include "input.h"
 
 #define TAG "MAIN"
 
@@ -32,14 +32,11 @@ void app_main(void)
     // Wait for the Wi-Fi connection before starting the HTTP task
     xEventGroupWaitBits(wifi_event_group, WIFI_CONNECTED_BIT, pdFALSE, pdTRUE, portMAX_DELAY);  // Wait for the Wi-Fi connection bit
 
-    // Initialize the output stream buf
-    if (init_output_stream_buf() == -1)
-    {
-        return;
-    }
+    // Initalize microphone
+    input_init();
 
-    // Create the queue
-    queue_init();
+    // Start the Microphone input task
+    xTaskCreate(input_task, "input_task", 8192, NULL, 5, NULL);
 
     // Start the HTTP GET task after Wi-Fi is connected
     ESP_LOGI(TAG, "Free heap before I2S init: %" PRIu32 " bytes", esp_get_free_heap_size());

@@ -24,6 +24,13 @@ esp_err_t input_init(void)
         .use_apll = false                                   // No Audio PLL
     };
 
+    i2s_pin_config_t pin_config = {
+        .bck_io_num = I2S_SCK,
+        .ws_io_num = I2S_WS,
+        .data_out_num = I2S_PIN_NO_CHANGE,
+        .data_in_num = I2S_SD
+    };
+
 
     return ESP_OK;
 }

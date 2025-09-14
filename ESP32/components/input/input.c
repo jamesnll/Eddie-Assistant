@@ -1,8 +1,5 @@
 /*
-
-Setup MIC
 Read values from mic
-
 */
 
 #include "input.h"
@@ -38,4 +35,21 @@ esp_err_t input_init(void)
 
 
     return ESP_OK;
+}
+
+void input_task(void *pvParameters)
+{
+    int32_t buffer[I2S_BUFFER_SIZE];
+    size_t bytes_read;
+
+    while (1)
+    {
+        esp_err_t ret_val = i2s_read(I2S_PORT_NUM, buffer, sizeof(buffer), &bytes_read, portMAX_DELAY);
+        if (ret_val == ESP_OK && bytes_read > 0)
+        {
+            int samples = bytes_read / sizeof(int32_t);
+            ESP_LOGI(TAG, "Read %d samples, first sample: %ld", samples, buffer[0]);
+        }
+    }
+    vTaskDelay(pdMS_TO_TICKS(10));
 }

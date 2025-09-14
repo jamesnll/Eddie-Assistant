@@ -13,6 +13,7 @@
 #define I2S_SAMPLE_RATE 16000
 #define I2S_PORT_NUM (1)
 #define I2S_BITS_PER_SAMPLE I2S_DATA_BIT_WIDTH_32BIT
+#define I2S_BUFFER_SIZE 1024
 
 esp_err_t input_init(void);
 void input_task(void *pvParameters);

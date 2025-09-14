@@ -31,6 +31,11 @@ esp_err_t input_init(void)
         .data_in_num = I2S_SD
     };
 
+    ESP_ERROR_CHECK(i2s_driver_install(I2S_PORT_NUM, &i2s_config, 0, NULL));
+    ESP_ERROR_CHECK(i2s_set_pin(I2S_PORT_NUM, &pin_config));
+
+    ESP_LOGI(TAG, "INMP441 initialized on I2S_NUM_1 (legacy API)");
+
 
     return ESP_OK;
 }

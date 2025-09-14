@@ -3,6 +3,7 @@
 
 #include "driver/i2s.h"
 #include "esp_err.h"
+#include "esp_log.h"
 
 // I2S Pins
 #define I2S_WS 25

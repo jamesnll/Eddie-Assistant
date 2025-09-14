@@ -2,6 +2,7 @@
 #define INPUT_H
 
 #include "driver/i2s.h"
+#include "esp_err.h"
 
 // I2S Pins
 #define I2S_WS 25
@@ -12,5 +13,8 @@
 #define I2S_SAMPLE_RATE 16000
 #define I2S_PORT_NUM (1)
 #define I2S_BITS_PER_SAMPLE I2S_DATA_BIT_WIDTH_32BIT
+
+esp_err_t input_init(void);
+void input_task(void *pvParameters);
 
 #endif // INPUT_H
